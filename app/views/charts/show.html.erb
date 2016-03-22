@@ -1,0 +1,38 @@
+<h1><%= @chart.name %></h1><p><%= link_to "Back to Chart Search", charts_path, class: 'btn btn-default' %><p>
+<div class=".col-md-4 .col-md-offset-4">
+  <div class="well">
+    <%= image_tag(@chart.picture_url, :width => 300, :class => 'align-left img-thumbnail') if @chart.picture.present? %><br />
+    <% if admin_signed_in? %>
+    <%= link_to "Edit Chart", edit_chart_path(@chart) %> | <%= link_to "Delete Chart", chart_path(@chart), method: :delete, data: {confirm: "Really delete the chart?"}
+     %><br />
+    <% end %><br />
+    <p>This chart is <%= @chart.height %> stitches high and <%= @chart.width %> stitches wide. It costs £<%= @chart.price %>.</p>
+    <p><%= link_to "Buy Now", @chart.link, :target => "_blank", :class => 'btn btn-success' %></p>
+    <p>
+      Tags:
+      <% @chart.tags.each do |tag| %>
+        <%= link_to tag.name, tag_path(tag) %>
+      <% end %>
+    </p>
+  </div>
+</div>
+<h3>Related Charts</h3>
+<div id="charts" class="transitions-enabled">
+<% @tag.charts.each do |chart| %>  
+  <div class="box panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title center"><%= link_to(chart.name, chart_path(chart)) %></h3>
+    </div>
+    <div class="panel-body">
+       <%= link_to image_tag(chart.picture_url, :width => 220) if chart.picture.present? %>
+    </div>
+    <div class="panel-footer center">
+      <% if chart.price %>
+         £ <%= chart.price %>
+       <% else %>
+         Magazine
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+</div>

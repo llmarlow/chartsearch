@@ -1,0 +1,20 @@
+<%= bootstrap_form_for @chart, :html => {:multipart => true}, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10" do |f| %>
+  <ul>
+  <% @chart.errors.full_messages.each do |error| %>
+    <li><%= error %></li>
+  <% end %>
+  </ul>
+    <%= f.text_field :name %>
+    <%= f.number_field :height %>
+    <%= f.number_field :width %>
+    <%= f.number_field :price, :step => 0.01, prepend: "£" %>
+    <%= f.file_field :picture %>
+    <%= f.text_field :link %>
+    <%= f.form_group do %>
+      <%= f.check_box :is_magazine %> 
+    <% end %>
+    <%= f.text_field :tag_list %>
+    <%= f.form_group do %>
+      <%= f.primary %>
+    <% end %>
+<% end %>
